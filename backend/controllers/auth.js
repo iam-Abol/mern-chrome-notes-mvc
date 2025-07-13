@@ -32,3 +32,27 @@ exports.postSignUp = async (req, res, next) => {
     //implement error handling later
   }
 };
+exports.postLogin = async (req, res, next) => {
+  // res.send(req.body);
+  const { email, password } = req.body;
+  try {
+    const data = await User.findByEmail(email);
+    // if(data.user)
+    if (data.rowCount != 1) throw new Error("invalid email");
+    const user = data.rows[0];
+    const isEqual = await bcrypt.compare(password, user.password);
+    if (!isEqual) throw new Error("invalid password");
+
+    req.session.userId = user.id;
+    req.session.isLoggedIn = true;
+    res.send("loged in");
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
+};
+exports.getLogin = (req, res, next) => {
+  console.log(req.session);
+
+  res.render("auth/login");
+};
