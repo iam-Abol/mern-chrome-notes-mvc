@@ -6,7 +6,7 @@ const Note = require("../models/note");
 router.get("/", authMiddleware, async (req, res, next) => {
   let notes = await Note.getNotes();
   notes = notes.rows;
-  res.send(notes);
+  res.render("notes/index", { title: "HOME" });
 });
 
 module.exports = router;

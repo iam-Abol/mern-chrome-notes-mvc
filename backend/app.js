@@ -35,6 +35,10 @@ app.use(
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
   })
 );
+app.use((req, res, next) => {
+  res.locals.username = req.session.username || null;
+  next();
+});
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 

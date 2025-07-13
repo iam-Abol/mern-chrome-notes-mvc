@@ -44,6 +44,7 @@ exports.postLogin = async (req, res, next) => {
     if (!isEqual) throw new Error("invalid password");
 
     req.session.userId = user.id;
+    req.session.username = user.username;
     req.session.isLoggedIn = true;
     res.send("loged in");
   } catch (err) {
