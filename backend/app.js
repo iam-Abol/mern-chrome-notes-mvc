@@ -7,6 +7,7 @@ const app = express();
 const path = require("path");
 
 const authRoutes = require("./routes/auth");
+const noteRoutes = require("./routes/note");
 
 const expressSession = require("express-session");
 
@@ -38,10 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(authRoutes);
-app.get("/test", authMiddleware, (req, res, next) => {
-  console.log("hello");
-  res.send("hh");
-});
+app.use(noteRoutes);
 app.listen(3000, () => {
   console.log("connected");
 });
