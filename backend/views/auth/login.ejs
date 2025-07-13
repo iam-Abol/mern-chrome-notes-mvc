@@ -1,62 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../includes/header.ejs') %>
 
-<head>
-    <meta charset="UTF-8">
-    <title>LOGIN</title>
+    <body class="bg-blue">
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <div class="flex min-h-screen bg-white">
 
 
-</head>
+            <div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
+                <div class="text-left p-0 font-sans text-center">
+                    <h1 class=" text-gray-800 text-3xl font-medium">
+                        WELCOME BACK
 
-<body class="bg-blue">
+                    </h1>
+                    <!-- <h3 class="p-1 text-gray-700">Free forever. No payment needed.</h3> -->
+                </div>
+                <form action="/login" method="post" class="p-0">
+                    <div class="mt-5">
+                        <label for="email" class="">
+                            Email :
+                        </label>
+                        <input type="text"
+                            class="block w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent "
+                            placeholder="Email" name="email" />
+                    </div>
 
-    <div class="flex min-h-screen bg-white">
+                    <div class="mt-5">
+                        <label for="email" class="">
+                            Password :
+                        </label>
+                        <input type="password"
+                            class="block w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent  "
+                            placeholder="Password" name="password" />
+                    </div>
 
+                    <div class="mt-10">
+                        <button class="py-3 bg-green-500 text-white w-full rounded hover:bg-green-600" type="submit">
+                            LOGIN
+                        </button>
+                        <!-- <input type="submit" value="" -->
+                        <!-- /> -->
+                    </div>
+                </form>
 
-        <div class="md:w-1/2 max-w-lg mx-auto my-24 px-4 py-5 shadow-none">
-            <div class="text-left p-0 font-sans text-center">
-                <h1 class=" text-gray-800 text-3xl font-medium">
-                    WELCOME BACK
-
-                </h1>
-                <!-- <h3 class="p-1 text-gray-700">Free forever. No payment needed.</h3> -->
             </div>
-            <form action="/login" method="post" class="p-0">
-                <div class="mt-5">
-                    <label for="email" class="">
-                        Email :
-                    </label>
-                    <input type="text"
-                        class="block w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent "
-                        placeholder="Email" name="email" />
-                </div>
-
-                <div class="mt-5">
-                    <label for="email" class="">
-                        Password :
-                    </label>
-                    <input type="password"
-                        class="block w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent  "
-                        placeholder="Password" name="password" />
-                </div>
-
-                <div class="mt-10">
-                    <button class="py-3 bg-green-500 text-white w-full rounded hover:bg-green-600" type="submit">
-                        LOGIN
-                    </button>
-                    <!-- <input type="submit" value="" -->
-                    <!-- /> -->
-                </div>
-            </form>
-
         </div>
-    </div>
 
-</body>
-
+    </body>
 
 
 
-</html>
+
+    </html>
