@@ -1,6 +1,10 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
+exports.getSignUp = (req, res, next) => {
+  res.render("auth/signup");
+};
+
 exports.postSignUp = async (req, res, next) => {
   let { email, password, username } = req.body;
   try {
