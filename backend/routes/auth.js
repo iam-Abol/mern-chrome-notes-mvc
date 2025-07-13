@@ -1,5 +1,6 @@
 const express = require("express");
-const db = require("../db");
+
+const User = require("../models/user");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 router.get("/login", (req, res, next) => {
@@ -11,29 +12,23 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   let { email, password, username } = req.body;
   try {
-    let check = await db.query("select email from users where email= $1  ", [
-      email,
-    ]);
-    console.log(check.rowCount);
+    let emailCheck = await User.findByEmail(email);
+    console.log(emailCheck.rowCount);
 
-    if (check.rowCount != 0) {
+    if (emailCheck.rowCount != 0) {
       throw new Error("email exist");
-      return;
     }
 
-    check = await db.query("select username from users where username= $1  ", [
-      username,
-    ]);
-    if (check.rowCount != 0) {
+    let usernameCheck = await User.findByUsername(username);
+    if (usernameCheck.rowCount != 0) {
       throw new Error("username exist");
     }
 
     const hashPassword = await bcrypt.hash(password, 12);
 
-    const data = await db.query(
-      "insert into users (username,email,password) values ($1,$2,$3) returning *",
-      [username, email, hashPassword]
-    );
+    const data = await User.createUser(email, hashPassword, username);
+    console.log(data);
+
     res.redirect("/login");
   } catch (error) {
     console.log(error);
