@@ -14,6 +14,7 @@ const pool = require("./db").pool;
 
 const pgSession = require("connect-pg-simple")(expressSession);
 
+const authMiddleware = require("./middlewares/auth");
 /////
 /////
 /////
@@ -37,7 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(authRoutes);
-app.get("/test", (req, res, next) => {
+app.get("/test", authMiddleware, (req, res, next) => {
   console.log("hello");
   res.send("hh");
 });
