@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 exports.getSignUp = (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", { title: "SIGNUP" });
 };
 
 exports.postSignUp = async (req, res, next) => {
@@ -54,5 +54,5 @@ exports.postLogin = async (req, res, next) => {
 exports.getLogin = (req, res, next) => {
   console.log(req.session);
 
-  res.render("auth/login");
+  res.render("auth/login", { title: "LOGIN" });
 };
