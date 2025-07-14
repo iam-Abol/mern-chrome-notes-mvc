@@ -36,6 +36,21 @@ router.post("/pdf/:noteId", authMiddleware, async (req, res, next) => {
       "Content-Disposition",
       `attachment; filename="${note.title}.pdf"`
     );
+    doc.text("MY NOTE APP", {
+      align: "center",
+      lineGap: 25,
+    });
+
+    doc
+      .fontSize(30)
+      .text(note.title, { underline: true, lineGap: 15, align: "center" });
+
+    // doc
+    // .moveTo(50, doc.y + 1)
+    // .lineTo(550, doc.y + 1)
+    // .stroke();
+
+    doc.text(note.content);
     doc.pipe(res);
     doc.end();
     // res.redirect("/");
