@@ -1,3 +1,4 @@
+const Note = require("../models/note");
 exports.getIndex = async (req, res, next) => {
   try {
     let notes = await Note.getNotes(req.session.userId);

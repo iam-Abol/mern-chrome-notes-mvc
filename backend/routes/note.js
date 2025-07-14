@@ -8,6 +8,8 @@ router.post("/", authMiddleware, noteController.postIndex);
 router.get("/create", authMiddleware, noteController.getCreate);
 router.post("/delete/:noteId", authMiddleware, noteController.deleteNote);
 
+const PDFDocument = require("pdfkit");
+
 router.post("/pdf/:noteId", authMiddleware, async (req, res, next) => {
   const { noteId } = req.params;
   // console.log(req.params);
@@ -21,8 +23,21 @@ router.post("/pdf/:noteId", authMiddleware, async (req, res, next) => {
 
     if (note.user_id != req.session.userId)
       throw new Error("not authenticated");
-    // await Note.deleteNote(noteId);
-    res.send(note);
+    console.log(note); /////////////////////////////////
+
+    const { title, content } = note;
+    const extractedDate = new Date().toLocaleString();
+    // console.log(extractedDate);
+
+    const doc = new PDFDocument();
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${note.title}.pdf"`
+    );
+    doc.pipe(res);
+    doc.end();
     // res.redirect("/");
   } catch (err) {
     console.log(err);
