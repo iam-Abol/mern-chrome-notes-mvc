@@ -46,14 +46,14 @@ exports.postLogin = async (req, res, next) => {
     req.session.userId = user.id;
     req.session.username = user.username;
     req.session.isLoggedIn = true;
-    res.send("loged in");
+    res.redirect("/");
   } catch (err) {
     console.log(err);
     res.send(err);
   }
 };
 exports.getLogin = (req, res, next) => {
-  console.log(req.session);
+  // console.log(req.session);
 
   res.render("auth/login", { title: "LOGIN" });
 };
