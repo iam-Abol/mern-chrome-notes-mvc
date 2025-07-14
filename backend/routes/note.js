@@ -10,6 +10,16 @@ router.get("/", authMiddleware, async (req, res, next) => {
 
   res.render("notes/index", { title: "HOME", notes });
 });
+router.post("/", async (req, res, next) => {
+  const { title, content } = req.body;
+  try {
+    const note = await Note.createNote(title, content, req.session.userId);
+    console.log(note);
+    res.redirect("/");
+  } catch (err) {
+    res.send(err);
+  }
+});
 router.get("/create", (req, res, next) => {
   res.render("notes/create", { title: "add note" });
 });
