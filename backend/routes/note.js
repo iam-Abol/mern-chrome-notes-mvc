@@ -2,36 +2,16 @@ const express = require("express");
 const authMiddleware = require("../middlewares/auth");
 const router = express.Router();
 const Note = require("../models/note");
+const noteController = require("../controllers/note");
+router.get("/", authMiddleware, noteController.getIndex);
+router.post("/", authMiddleware, noteController.postIndex);
+router.get("/create", authMiddleware, noteController.getCreate);
+router.post("/delete/:noteId", authMiddleware, noteController.deleteNote);
 
-router.get("/", authMiddleware, async (req, res, next) => {
-  try {
-    let notes = await Note.getNotes(req.session.userId);
-    notes = notes.rows;
-    console.log(notes);
-
-    res.render("notes/index", { title: "HOME", notes });
-  } catch (err) {
-    console.log(err);
-    res.send(err);
-  }
-});
-router.post("/", authMiddleware, async (req, res, next) => {
-  const { title, content } = req.body;
-  try {
-    const note = await Note.createNote(title, content, req.session.userId);
-    console.log(note);
-    res.redirect("/");
-  } catch (err) {
-    res.send(err);
-  }
-});
-router.get("/create", authMiddleware, (req, res, next) => {
-  res.render("notes/create", { title: "add note" });
-});
-router.post("/delete/:noteId", authMiddleware, async (req, res, next) => {
+router.post("/pdf/:noteId", authMiddleware, async (req, res, next) => {
   const { noteId } = req.params;
-  console.log(req.params);
-  console.log(noteId);
+  // console.log(req.params);
+  // console.log(noteId);
 
   try {
     let note = await Note.getNote(noteId);
@@ -41,11 +21,13 @@ router.post("/delete/:noteId", authMiddleware, async (req, res, next) => {
 
     if (note.user_id != req.session.userId)
       throw new Error("not authenticated");
-    await Note.deleteNote(noteId);
-    res.redirect("/");
+    // await Note.deleteNote(noteId);
+    res.send(note);
+    // res.redirect("/");
   } catch (err) {
     console.log(err);
     res.send(err);
   }
 });
+
 module.exports = router;
