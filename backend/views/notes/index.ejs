@@ -21,9 +21,9 @@
                     </p>
                     <div class="flex justify-between text-sm ">
                         <span>Created at: <%= new Date(note.created_at).toLocaleString() %></span>
-                        <div><a>edit</a>
+                        <div><a href="/edit/<%= note.id %>" class="mx-4  text-green-500 hover:underline">edit</a>
                             <form action="" method="post" class="inline">
-                                <button>delete</button>
+                                <button class="  text-red-500 hover:underline">delete</button>
                             </form>
                         </div>
                     </div>
