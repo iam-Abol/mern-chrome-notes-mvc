@@ -10,5 +10,7 @@ router.get("/", authMiddleware, async (req, res, next) => {
 
   res.render("notes/index", { title: "HOME", notes });
 });
-
+router.get("/create", (req, res, next) => {
+  res.render("notes/create", { title: "add note" });
+});
 module.exports = router;
