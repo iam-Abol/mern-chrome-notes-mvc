@@ -11,4 +11,24 @@ router.post("/delete/:noteId", authMiddleware, noteController.deleteNote);
 router.post("/pdf/:noteId", authMiddleware, noteController.getPdf);
 
 router.get("/:noteId", authMiddleware, noteController.showNote);
+router.get("/edit/:noteId", authMiddleware, async (req, res, next) => {
+  const { noteId } = req.params;
+  try {
+    let note = await Note.getNote(noteId);
+    if (note.rowCount != 1) return res.redirect("/");
+    note = note.rows[0];
+
+    if (note.user_id != req.session.userId)
+      throw new Error("not authenticated");
+    console.log(note); /////////////////////////////////
+
+    const { title, content } = note;
+    res.render("notes/edit", { title: "EDIT", note });
+  } catch (error) {}
+});
+
+router.post("/:noteId", (req, res, next) => {
+  const { title, content } = req.body;
+  res.send(title + content);
+});
 module.exports = router;
