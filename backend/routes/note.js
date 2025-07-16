@@ -8,56 +8,7 @@ router.post("/", authMiddleware, noteController.postIndex);
 router.get("/create", authMiddleware, noteController.getCreate);
 router.post("/delete/:noteId", authMiddleware, noteController.deleteNote);
 
-const PDFDocument = require("pdfkit");
+router.post("/pdf/:noteId", authMiddleware, noteController.getPdf);
 
-router.post("/pdf/:noteId", authMiddleware, async (req, res, next) => {
-  const { noteId } = req.params;
-  // console.log(req.params);
-  // console.log(noteId);
-
-  try {
-    let note = await Note.getNote(noteId);
-    if (note.rowCount != 1) return res.redirect("/");
-    note = note.rows[0];
-    console.log(note);
-
-    if (note.user_id != req.session.userId)
-      throw new Error("not authenticated");
-    console.log(note); /////////////////////////////////
-
-    const { title, content } = note;
-    const extractedDate = new Date().toLocaleString();
-    // console.log(extractedDate);
-
-    const doc = new PDFDocument();
-
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${note.title}.pdf"`
-    );
-    doc.text("MY NOTE APP", {
-      align: "center",
-      lineGap: 25,
-    });
-
-    doc
-      .fontSize(30)
-      .text(note.title, { underline: true, lineGap: 15, align: "center" });
-
-    // doc
-    // .moveTo(50, doc.y + 1)
-    // .lineTo(550, doc.y + 1)
-    // .stroke();
-
-    doc.text(note.content);
-    doc.pipe(res);
-    doc.end();
-    // res.redirect("/");
-  } catch (err) {
-    console.log(err);
-    res.send(err);
-  }
-});
-
+router.get("/:noteId", authMiddleware, noteController.showNote);
 module.exports = router;
