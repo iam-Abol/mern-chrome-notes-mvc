@@ -96,6 +96,8 @@ exports.getPdf = async (req, res, next) => {
 };
 exports.showNote = async (req, res, next) => {
   const { noteId } = req.params;
+  console.log(noteId + "herere1");
+
   try {
     let note = await Note.getNote(noteId);
     if (note.rowCount != 1) return res.redirect("/");
@@ -105,8 +107,8 @@ exports.showNote = async (req, res, next) => {
       throw new Error("not authenticated");
     console.log(note); /////////////////////////////////
 
-    const { title, content } = note;
-    const extractedDate = new Date().toLocaleString();
+    // const { title, content } = note;
+    // const extractedDate = new Date().toLocaleString();
     // console.log(extractedDate);
 
     // res.send(note);

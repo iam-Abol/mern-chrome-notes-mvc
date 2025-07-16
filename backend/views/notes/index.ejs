@@ -33,7 +33,7 @@
                     <div class="flex justify-between text-sm ">
                         <span>Created at: <%= new Date(note.created_at).toLocaleString() %></span>
                         <div>
-                            <a href="/<%= note.id %>"
+                            <a href="/show/<%= note.id %>"
                                 class="mx-4  text-gray-500 hover:underline hover:text-gray-900">View</a>
                             <form action="/pdf/<%= note.id %>" method="post" class="inline">
                                 <button class="  text-gray-600 hover:underline hover:text-gray-900">pdf</button>

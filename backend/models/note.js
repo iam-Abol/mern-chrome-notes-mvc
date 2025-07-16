@@ -12,6 +12,13 @@ exports.createNote = (title, content, id) => {
 exports.getNote = (noteId) => {
   return db.query("select * from notes where id = $1", [noteId]);
 };
+exports.updateNote = (noteId, title, content) => {
+  return db.query("update notes set title=$1 , content=$2 where id=$3", [
+    title,
+    content,
+    noteId,
+  ]);
+};
 exports.deleteNote = (noteId) => {
   return db.query("delete from notes where id= $1", [noteId]);
 };

@@ -10,7 +10,7 @@ router.post("/delete/:noteId", authMiddleware, noteController.deleteNote);
 
 router.post("/pdf/:noteId", authMiddleware, noteController.getPdf);
 
-router.get("/:noteId", authMiddleware, noteController.showNote);
+router.get("/show/:noteId", authMiddleware, noteController.showNote);
 router.get("/edit/:noteId", authMiddleware, async (req, res, next) => {
   const { noteId } = req.params;
   try {
@@ -27,8 +27,22 @@ router.get("/edit/:noteId", authMiddleware, async (req, res, next) => {
   } catch (error) {}
 });
 
-router.post("/:noteId", (req, res, next) => {
+router.post("/update/:noteId", async (req, res, next) => {
+  console.log("here in update");
+
   const { title, content } = req.body;
-  res.send(title + content);
+  const { noteId } = req.params;
+  console.log(title, content, noteId);
+
+  try {
+    await Note.updateNote(noteId, title, content);
+    res.redirect("/show/" + noteId);
+  } catch (error) {
+    //
+    console.log(error);
+
+    res.send(error);
+  }
+  // res.send(title + content);
 });
 module.exports = router;

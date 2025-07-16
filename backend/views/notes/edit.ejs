@@ -1,7 +1,7 @@
 <%- include('../includes/header.ejs') %>
     <%- include('../includes/navbar.ejs') %>
         <div class="m-auto w-4/5 flex-grow">
-            <form action="/<%= note.id %>" method="post" class="p-0">
+            <form action="/update/<%= note.id %>" method="post" class="p-0">
                 <div class="mt-5">
                     <label for="title" class=""> title : </label>
                     <input type="text"
