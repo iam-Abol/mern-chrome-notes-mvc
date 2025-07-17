@@ -27,9 +27,7 @@ exports.postSignUp = async (req, res, next) => {
 
     res.redirect("/login");
   } catch (error) {
-    console.log(error);
-    res.send("error");
-    //implement error handling later
+    next(err);
   }
 };
 exports.postLogin = async (req, res, next) => {
@@ -48,8 +46,7 @@ exports.postLogin = async (req, res, next) => {
     req.session.isLoggedIn = true;
     res.redirect("/");
   } catch (err) {
-    console.log(err);
-    res.send(err);
+    next(err);
   }
 };
 exports.getLogin = (req, res, next) => {

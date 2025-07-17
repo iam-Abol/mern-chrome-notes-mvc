@@ -34,7 +34,7 @@ exports.postIndex = async (req, res, next) => {
     console.log(note);
     res.redirect("/");
   } catch (err) {
-    res.send(err);
+    next(err);
   }
 };
 exports.getCreate = (req, res, next) => {
@@ -56,8 +56,7 @@ exports.deleteNote = async (req, res, next) => {
     await Note.deleteNote(noteId);
     res.redirect("/");
   } catch (err) {
-    console.log(err);
-    res.send(err);
+    next(err);
   }
 };
 exports.getPdf = async (req, res, next) => {
@@ -105,8 +104,7 @@ exports.getPdf = async (req, res, next) => {
     doc.end();
     // res.redirect("/");
   } catch (err) {
-    console.log(err);
-    res.send(err);
+    next(err);
   }
 };
 
@@ -131,8 +129,7 @@ exports.showNote = async (req, res, next) => {
     res.render("notes/showNote", { title: "note", note });
     // res.redirect("/");
   } catch (err) {
-    console.log(err);
-    res.send(err);
+    next(err);
   }
 };
 
@@ -149,7 +146,9 @@ exports.getEdit = async (req, res, next) => {
 
     const { title, content } = note;
     res.render("notes/edit", { title: "EDIT", note });
-  } catch (error) {}
+  } catch (error) {
+    next(err);
+  }
 };
 
 exports.postUpdate = async (req, res, next) => {
@@ -164,9 +163,7 @@ exports.postUpdate = async (req, res, next) => {
     res.redirect("/show/" + noteId);
   } catch (error) {
     //
-    console.log(error);
-
-    res.send(error);
+    next(err);
   }
   // res.send(title + content);
 };
