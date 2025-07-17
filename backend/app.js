@@ -51,3 +51,10 @@ app.use("/", authMiddleware, (req, res, next) => {
 app.listen(3000, () => {
   console.log("connected");
 });
+app.use((err, req, res, next) => {
+  res.render("error", {
+    title: "ERROR",
+    message: err.message,
+    stack: err.stack,
+  });
+});

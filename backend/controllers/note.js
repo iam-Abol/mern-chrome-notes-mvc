@@ -24,8 +24,7 @@ exports.getIndex = async (req, res, next) => {
 
     res.render("notes/index", { title: "HOME", notes, page, totalPage });
   } catch (err) {
-    console.log(err);
-    res.send(err);
+    next(err);
   }
 };
 exports.postIndex = async (req, res, next) => {
