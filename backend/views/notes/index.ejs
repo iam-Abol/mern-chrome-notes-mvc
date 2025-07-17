@@ -48,7 +48,23 @@
                 </div>
 
                 <% }) %>
-
+                    <div class="flex justify-center">
+                        <% if (page>1) { %>
+                            <a href="?page=<%= page-1 %>"
+                                class="bg-blue-500 p-1 m-2 px-2 rounded-md text-white hover:bg-blue-700">
+                                &lt;
+                            </a>
+                            <% } %>
+                                <a class="bg-blue-500 p-1 m-2 px-2 rounded-md text-white hover:bg-blue-700">
+                                    <%= page %>
+                                </a>
+                                <% if (page< totalPage) { %>
+                                    <a href="?page=<%= page+1 %>"
+                                        class="bg-blue-500 p-1 m-2 px-2 rounded-md text-white hover:bg-blue-700">
+                                        &gt;
+                                    </a>
+                                    <% } %>
+                    </div>
         </ul>
 
 

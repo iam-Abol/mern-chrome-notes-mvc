@@ -7,11 +7,13 @@ exports.getIndex = async (req, res, next) => {
   try {
     let count = await Note.getNotesCount(req.session.userId);
     count = count.rows[0].count;
-    console.log("count is ", count);
-    if (Math.ceil(count / perPage) < page) {
+    // console.log("count is ", count);
+    const totalPage = Math.ceil(count / perPage);
+    if (totalPage < page) {
       res.render("404", { title: "page not found" });
       return;
     }
+
     let notes = await Note.getNotes(
       req.session.userId,
       perPage,
@@ -20,7 +22,7 @@ exports.getIndex = async (req, res, next) => {
     notes = notes.rows;
     // console.log(notes);
 
-    res.render("notes/index", { title: "HOME", notes });
+    res.render("notes/index", { title: "HOME", notes, page, totalPage });
   } catch (err) {
     console.log(err);
     res.send(err);
