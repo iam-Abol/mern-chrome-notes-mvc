@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(authRoutes);
 app.use(noteRoutes);
-app.use("/", (req, res, next) => {
+app.use("/", authMiddleware, (req, res, next) => {
   res.render("404", { title: "page not found" });
 });
 app.listen(3000, () => {

@@ -1,8 +1,22 @@
 const Note = require("../models/note");
 const PDFDocument = require("pdfkit");
 exports.getIndex = async (req, res, next) => {
+  const page = +req.query.page || 1;
+  // console.log(page);
+  const perPage = 5;
   try {
-    let notes = await Note.getNotes(req.session.userId);
+    let count = await Note.getNotesCount(req.session.userId);
+    count = count.rows[0].count;
+    console.log("count is ", count);
+    if (Math.ceil(count / perPage) < page) {
+      res.render("404", { title: "page not found" });
+      return;
+    }
+    let notes = await Note.getNotes(
+      req.session.userId,
+      perPage,
+      (page - 1) * perPage
+    );
     notes = notes.rows;
     // console.log(notes);
 
@@ -94,6 +108,7 @@ exports.getPdf = async (req, res, next) => {
     res.send(err);
   }
 };
+
 exports.showNote = async (req, res, next) => {
   const { noteId } = req.params;
   console.log(noteId + "herere1");
@@ -118,4 +133,39 @@ exports.showNote = async (req, res, next) => {
     console.log(err);
     res.send(err);
   }
+};
+
+exports.getEdit = async (req, res, next) => {
+  const { noteId } = req.params;
+  try {
+    let note = await Note.getNote(noteId);
+    if (note.rowCount != 1) return res.redirect("/");
+    note = note.rows[0];
+
+    if (note.user_id != req.session.userId)
+      throw new Error("not authenticated");
+    console.log(note); /////////////////////////////////
+
+    const { title, content } = note;
+    res.render("notes/edit", { title: "EDIT", note });
+  } catch (error) {}
+};
+
+exports.postUpdate = async (req, res, next) => {
+  console.log("here in update");
+
+  const { title, content } = req.body;
+  const { noteId } = req.params;
+  console.log(title, content, noteId);
+
+  try {
+    await Note.updateNote(noteId, title, content);
+    res.redirect("/show/" + noteId);
+  } catch (error) {
+    //
+    console.log(error);
+
+    res.send(error);
+  }
+  // res.send(title + content);
 };

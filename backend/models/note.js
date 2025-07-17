@@ -1,7 +1,15 @@
 const db = require("../db");
 
-exports.getNotes = (userId) => {
-  return db.query("select * from notes where user_id = $1", [userId]);
+exports.getNotes = (userId, limit, offset) => {
+  return db.query("select * from notes where user_id = $1 limit $2 offset $3", [
+    userId,
+    limit,
+    offset,
+  ]);
+};
+
+exports.getNotesCount = (userId) => {
+  return db.query("select count(*) from notes where user_id= $1", [userId]);
 };
 exports.createNote = (title, content, id) => {
   return db.query(
