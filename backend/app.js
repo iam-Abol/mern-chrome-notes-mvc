@@ -16,6 +16,7 @@ const pool = require("./db").pool;
 const pgSession = require("connect-pg-simple")(expressSession);
 
 const authMiddleware = require("./middlewares/auth");
+const { title } = require("process");
 /////
 /////
 /////
@@ -44,6 +45,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(authRoutes);
 app.use(noteRoutes);
+app.use("/", (req, res, next) => {
+  res.render("404", { title: "page not found" });
+});
 app.listen(3000, () => {
   console.log("connected");
 });
