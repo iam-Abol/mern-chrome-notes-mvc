@@ -163,7 +163,11 @@ exports.postUpdate = async (req, res, next) => {
   const { title, content } = req.body;
   const { noteId } = req.params;
   console.log(title, content, noteId);
-
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    req.flash("error", error.array()[0].msg);
+    return res.redirect("/edit/" + noteId);
+  }
   try {
     await Note.updateNote(noteId, title, content);
     res.redirect("/show/" + noteId);

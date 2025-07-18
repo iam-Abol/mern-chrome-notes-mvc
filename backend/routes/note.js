@@ -27,5 +27,16 @@ router.post("/pdf/:noteId", authMiddleware, noteController.getPdf);
 router.get("/show/:noteId", authMiddleware, noteController.showNote);
 router.get("/edit/:noteId", authMiddleware, noteController.getEdit);
 
-router.post("/update/:noteId", authMiddleware, noteController.postUpdate);
+router.post(
+  "/update/:noteId",
+  [
+    body("title")
+      .trim()
+      .isLength({ min: 6 })
+      .withMessage("title should be atleast 6 characters"),
+    body("content").not().isEmpty().withMessage("note cant be empty"),
+  ],
+  authMiddleware,
+  noteController.postUpdate
+);
 module.exports = router;

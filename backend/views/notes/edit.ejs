@@ -1,30 +1,38 @@
 <%- include('../includes/header.ejs') %>
     <%- include('../includes/navbar.ejs') %>
-        <div class="m-auto w-4/5 flex-grow">
-            <form action="/update/<%= note.id %>" method="post" class="p-0">
-                <div class="mt-5">
-                    <label for="title" class=""> title : </label>
-                    <input type="text"
-                        class="block w-full rounded border border-gray-300 p-2 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:outline-none"
-                        placeholder="title" name="title" required value="<%= note.title %>" />
-                </div>
+        <% if (error.length) { %>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Error: </strong>
+                <span class="block sm:inline">
+                    <%= error %>
+                </span>
+            </div>
+            <% } %>
+                <div class="m-auto w-4/5 flex-grow">
+                    <form action="/update/<%= note.id %>" method="post" class="p-0">
+                        <div class="mt-5">
+                            <label for="title" class=""> title : </label>
+                            <input type="text"
+                                class="block w-full rounded border border-gray-300 p-2 focus:border-transparent focus:ring-1 focus:ring-gray-400 focus:outline-none"
+                                placeholder="title" name="title" required value="<%= note.title %>" />
+                        </div>
 
-                <div class="mt-5">
-                    <label for="content" class=""> Note : </label>
-                    <textarea name="content" id="content" rows="6" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-transparent focus:ring-1 focus:ring-gray-200 focus:outline-none text-lg p-3"><%= note.content %></textarea>
-                </div>
+                        <div class="mt-5">
+                            <label for="content" class=""> Note : </label>
+                            <textarea name="content" id="content" rows="6" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-transparent focus:ring-1 focus:ring-gray-200 focus:outline-none text-lg p-3"><%= note.content %></textarea>
+                        </div>
 
-                <div class="mt-10 flex w-full">
-                    <button class="w-1/2 mx-4 rounded bg-green-500 py-3 text-white hover:bg-green-600"
-                        type="submit">SAVE
-                    </button>
-                    <!-- <input type="submit" value="" -->
-                    <!-- /> -->
-                    <a href="/<%= note.id %>"
-                        class="w-1/2 rounded mx-4 text-center bg-gray-500 py-3 text-white hover:bg-gray-600">CANCEL
-                    </a>
+                        <div class="mt-10 flex w-full">
+                            <button class="w-1/2 mx-4 rounded bg-green-500 py-3 text-white hover:bg-green-600"
+                                type="submit">SAVE
+                            </button>
+                            <!-- <input type="submit" value="" -->
+                            <!-- /> -->
+                            <a href="/<%= note.id %>"
+                                class="w-1/2 rounded mx-4 text-center bg-gray-500 py-3 text-white hover:bg-gray-600">CANCEL
+                            </a>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <%- include('../includes/footer.ejs') %>
+                <%- include('../includes/footer.ejs') %>
