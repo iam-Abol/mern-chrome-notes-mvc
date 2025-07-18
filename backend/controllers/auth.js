@@ -1,23 +1,31 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-
+const { validationResult } = require("express-validator");
 exports.getSignUp = (req, res, next) => {
   res.render("auth/signup", { title: "SIGNUP" });
 };
 
 exports.postSignUp = async (req, res, next) => {
   let { email, password, username } = req.body;
+  const error = validationResult(req);
+  // return res.send(error.array());
+  if (!error.isEmpty()) {
+    req.flash("error", error.array()[0].msg);
+    return res.redirect("/signup");
+  }
   try {
     let emailCheck = await User.findByEmail(email);
     console.log(emailCheck.rowCount);
 
     if (emailCheck.rowCount != 0) {
-      throw new Error("email exist");
+      req.flash("error", "email already registered");
+      return res.redirect("/signup");
     }
 
     let usernameCheck = await User.findByUsername(username);
     if (usernameCheck.rowCount != 0) {
-      throw new Error("username exist");
+      req.flash("error", "this username is already used");
+      return res.redirect("/signup");
     }
 
     const hashPassword = await bcrypt.hash(password, 12);

@@ -16,7 +16,7 @@ const pool = require("./db").pool;
 const pgSession = require("connect-pg-simple")(expressSession);
 
 const authMiddleware = require("./middlewares/auth");
-const { title } = require("process");
+const flash = require("connect-flash");
 /////
 /////
 /////
@@ -36,8 +36,10 @@ app.use(
     cookie: { maxAge: 12 * 60 * 60 * 1000 },
   })
 );
+app.use(flash());
 app.use((req, res, next) => {
   res.locals.username = req.session.username || null;
+  res.locals.error = req.flash("error") || null;
   next();
 });
 app.use(express.urlencoded({ extended: false }));

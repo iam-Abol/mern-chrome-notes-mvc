@@ -1,5 +1,6 @@
 const Note = require("../models/note");
 const PDFDocument = require("pdfkit");
+const { validationResult } = require("express-validator");
 exports.getIndex = async (req, res, next) => {
   const page = +req.query.page || 1;
   // console.log(page);
@@ -29,6 +30,7 @@ exports.getIndex = async (req, res, next) => {
 };
 exports.postIndex = async (req, res, next) => {
   const { title, content } = req.body;
+  // const error
   try {
     const note = await Note.createNote(title, content, req.session.userId);
     console.log(note);

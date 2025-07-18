@@ -3,6 +3,9 @@ const authMiddleware = require("../middlewares/auth");
 const router = express.Router();
 const Note = require("../models/note");
 const noteController = require("../controllers/note");
+
+const { body } = require("express-validator");
+
 router.get("/", authMiddleware, noteController.getIndex);
 router.post("/", authMiddleware, noteController.postIndex);
 router.get("/create", authMiddleware, noteController.getCreate);
