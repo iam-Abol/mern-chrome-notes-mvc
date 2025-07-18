@@ -30,7 +30,11 @@ exports.getIndex = async (req, res, next) => {
 };
 exports.postIndex = async (req, res, next) => {
   const { title, content } = req.body;
-  // const error
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    req.flash("error", error.array()[0].msg);
+    return res.redirect("/create");
+  }
   try {
     const note = await Note.createNote(title, content, req.session.userId);
     console.log(note);
