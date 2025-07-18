@@ -76,3 +76,7 @@ exports.getLogin = (req, res, next) => {
 
   res.render("auth/login", { title: "LOGIN" });
 };
+exports.getLogout = (req, res, next) => {
+  req.session.destroy();
+  res.redirect("/login");
+};

@@ -24,8 +24,5 @@ router.post(
   ],
   authController.postSignUp
 );
-router.get("/logout", (req, res, next) => {
-  req.session.destroy();
-  res.redirect("/login");
-});
+router.get("/logout", authController.getLogout);
 module.exports = router;
