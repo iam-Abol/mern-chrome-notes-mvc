@@ -6,7 +6,14 @@ const { body } = require("express-validator");
 const User = require("../models/user");
 
 router.get("/login", authController.getLogin);
-router.post("/login", authController.postLogin);
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("invalid email"),
+    body("password").isLength({ min: 6 }).withMessage("password is to short"),
+  ],
+  authController.postLogin
+);
 router.get("/signup", authController.getSignUp);
 router.post(
   "/signup",

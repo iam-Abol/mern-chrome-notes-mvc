@@ -41,13 +41,27 @@ exports.postSignUp = async (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   // res.send(req.body);
   const { email, password } = req.body;
+  const error = validationResult(req);
+  // return res.send(error.array());
+  console.log(error);
+
+  if (!error.isEmpty()) {
+    req.flash("error", error.array()[0].msg);
+    return res.redirect("/login");
+  }
   try {
     const data = await User.findByEmail(email);
     // if(data.user)
-    if (data.rowCount != 1) throw new Error("invalid email");
+    if (data.rowCount != 1) {
+      req.flash("error", "invalid input");
+      return res.redirect("/login");
+    }
     const user = data.rows[0];
     const isEqual = await bcrypt.compare(password, user.password);
-    if (!isEqual) throw new Error("invalid password");
+    if (!isEqual) {
+      req.flash("error", "invalid input");
+      return res.redirect("/login");
+    }
 
     req.session.userId = user.id;
     req.session.username = user.username;
