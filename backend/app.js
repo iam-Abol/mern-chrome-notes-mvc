@@ -14,6 +14,8 @@ const expressSession = require("express-session");
 const pool = require("./db").pool;
 
 const pgSession = require("connect-pg-simple")(expressSession);
+const helmet = require("helmet");
+const compression = require("compression");
 
 const authMiddleware = require("./middlewares/auth");
 const flash = require("connect-flash");
@@ -23,7 +25,8 @@ const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("views", "views");
-
+app.use(helmet());
+app.use(compression());
 app.use(
   expressSession({
     store: new pgSession({
