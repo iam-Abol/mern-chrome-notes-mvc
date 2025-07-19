@@ -52,20 +52,19 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(noteRoutes);
-app.get("/debug", (req, res) => {
-  res.send({
-    csrfToken: req.csrfToken(),
-    session: req.session,
-  });
-});
 
 app.use("/", authMiddleware, (req, res, next) => {
   res.render("404", { title: "page not found" });
 });
-app.listen(3000, () => {
-  console.log("connected");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  // console.log(process.env.DATABASE_URL);
+
+  console.log("connected to ", PORT);
 });
 app.use((err, req, res, next) => {
+  console.log(err);
+
   res.render("error", {
     title: "ERROR",
     // message: err.message,
