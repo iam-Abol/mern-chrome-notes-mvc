@@ -8,8 +8,11 @@
         <li><a href="/about" class="hover:text-yellow-400">About</a></li>
     </ul>
     <div>
-        <span class="text-sm text-gray-300 mr-4 py-1 px-2 border-2 border-solid">Hi, <%= username %></span>
-        <a href="/logout" class="hover:text-yellow-400">Logout</a>
+        <% if (username) { %>
+            <span class="text-sm text-gray-300 mr-4 py-1 px-2 border-2 border-solid">Hi, <%= username %></span>
+            <% } %>
+
+                <a href="/logout" class="hover:text-yellow-400">Logout</a>
     </div>
 
 </nav>

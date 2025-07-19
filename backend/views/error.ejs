@@ -1,20 +1,21 @@
 <%- include('includes/header.ejs') %>
-    <%- include('includes/navbar.ejs') %>
 
-        <div class="flex flex-grow justify-center bg-red-200">
-            <div class="flex h-full w-1/2 justify-center py-5">
-                <div class="my-8 flex flex-col items-center justify-center px-5">
-                    <h1 class="text-9xl font-extrabold text-red-700">ERROR</h1>
-                    <p class="my-2 text-2xl font-bold">
-                        <%= message %>
-                    </p>
-                    <p class="my-2 text-sm font-semibold text-black">
-                        <%= stack %>
-                    </p>
-                    <a class="mx-5 p-0.5 w-1/3 rounded border-2 bg-inherit text-center font-semibold text-white hover:border-red-300 hover:bg-red-600"
-                        href="/">back to homepage </a>
-                </div>
+
+
+    <div class="flex flex-grow justify-center bg-red-200">
+        <div class="flex h-full w-1/2 justify-center py-5">
+            <div class="my-8 flex flex-col items-center justify-center px-5">
+                <h1 class="text-9xl font-extrabold text-red-700">ERROR</h1>
+                <p class="my-2 text-2xl font-bold">
+                    <%= message %>
+                </p>
+                <p class="my-2 text-sm font-semibold text-black">
+                    <%= stack %>
+                </p>
+                <a class="mx-5 p-0.5 w-1/3 rounded border-2 bg-inherit text-center font-semibold text-white hover:border-red-300 hover:bg-red-600"
+                    href="/">back to homepage </a>
             </div>
         </div>
+    </div>
 
-        <%- include('includes/footer.ejs') %>
+    <%- include('includes/footer.ejs') %>
